@@ -31,7 +31,9 @@ export class Auth {
       json: true
     };
 
+    console.debug('requesting Unreal Engine Launcher token');
     const response = await post(Endpoint.EPIC_OAUTH_TOKEN, options) as OAuthTokenResponse;
+    console.debug('successfully Unreal Engine Launcher token');
 
     return response.access_token;
   }
@@ -45,7 +47,9 @@ export class Auth {
       json: true
     };
 
+    console.debug('requesting Fortnite exchange code');
     const response = await get(Endpoint.EPIC_OAUTH_EXCHANGE, options) as OAuthExchangeResponse;
+    console.debug('successfully retrieved Fortnite exchange code');
 
     return response.code;
   }
@@ -66,7 +70,11 @@ export class Auth {
       json: true
     };
 
-    return await get(Endpoint.EPIC_OAUTH_TOKEN, options) as OAuthTokenResponse;
+    console.debug('requesting Fortnite API tokens');
+    const response = await post(Endpoint.EPIC_OAUTH_TOKEN, options) as OAuthTokenResponse;
+    console.debug('successfully retrieved Fortnite API tokens');
+
+    return response;
   }
 
   private accessToken: string;
