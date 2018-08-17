@@ -6,6 +6,7 @@
     "rules": {
         "interface-name": [true, "never-prefix"],
         "max-line-length": false,
+        "no-console": false,
         "object-literal-sort-keys": false,
         "ordered-imports": false,
         "quotemark": [true, "single"],
