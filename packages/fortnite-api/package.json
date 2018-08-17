@@ -7,5 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Cody Mathisen",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^10.7.1",
+    "@types/request": "^2.47.1"
+  },
+  "dependencies": {
+    "request": "^2.88.0"
+  }
 }
