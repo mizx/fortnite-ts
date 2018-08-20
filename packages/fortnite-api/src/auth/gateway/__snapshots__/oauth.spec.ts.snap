@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OAuth Gateway exchangeToken() should match snapshot with valid access token 1`] = `
+Object {
+  "code": "code",
+  "creatingClientId": "client-id",
+  "expiresInSeconds": 299,
+}
+`;
+
+exports[`OAuth Gateway getFortniteToken() should match snapshot with correct exchange code 1`] = `
+Object {
+  "access_token": "access-token-hash",
+  "account_id": "account-id-hash",
+  "app": "launcher",
+  "client_id": "client-id-hash",
+  "client_service": "launcher",
+  "expires_at": "2018-08-17T14:59:39.368Z",
+  "expires_in": 28800,
+  "in_app_id": "app-id-hash",
+  "internal_client": true,
+  "lastPasswordValidation": "2018-08-17T06:59:39.368Z",
+  "refresh_expires": 1987200,
+  "refresh_expires_at": "2018-09-09T06:59:39.368Z",
+  "refresh_token": "refresh-token",
+  "token_type": "bearer",
+}
+`;
+
+exports[`OAuth Gateway getLauncherToken() should match snapshot with correct username/password 1`] = `
+Object {
+  "access_token": "access-token-hash",
+  "account_id": "account-id-hash",
+  "app": "launcher",
+  "client_id": "client-id-hash",
+  "client_service": "launcher",
+  "expires_at": "2018-08-17T14:59:39.368Z",
+  "expires_in": 28800,
+  "in_app_id": "app-id-hash",
+  "internal_client": true,
+  "lastPasswordValidation": "2018-08-17T06:59:39.368Z",
+  "refresh_expires": 1987200,
+  "refresh_expires_at": "2018-09-09T06:59:39.368Z",
+  "refresh_token": "refresh-token",
+  "token_type": "bearer",
+}
+`;

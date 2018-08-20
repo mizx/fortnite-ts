@@ -1,3 +1,9 @@
+export interface OAuthExchangeResponse {
+  expiresInSeconds: number;
+  code: string;
+  creatingClientId: string;
+}
+
 export interface OAuthTokenResponse {
   access_token: string;
   expires_in: number;
@@ -13,10 +19,4 @@ export interface OAuthTokenResponse {
   lastPasswordValidation: string;
   app: string;
   in_app_id: string;
-}
-
-export interface OAuthExchangeResponse {
-  expiresInSeconds: number;
-  code: string;
-  creatingClientId: string;
 }
