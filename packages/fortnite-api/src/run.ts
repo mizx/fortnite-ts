@@ -1,4 +1,4 @@
-import { Auth } from './auth/auth';
+import { Auth } from './auth';
 import { EPIC_USERNAME, EPIC_PASSWORD } from './config';
 
 if (!EPIC_USERNAME) {
