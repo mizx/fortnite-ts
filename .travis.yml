@@ -1,3 +1,10 @@
 language: node_js
+cache:
+  directories:
+    - ~/.npm
 node_js:
-  - "node"
+  - '10'
+env:
+  matrix:
+    - PACKAGE=fortnite-ts-api
+script: lerna run test --scope $PACKAGE

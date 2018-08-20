@@ -1,9 +1,6 @@
 {
   "name": "@mizx/fortnite-root",
   "private": true,
-  "scripts": {
-    "test": "lerna run test"
-  },
   "devDependencies": {
     "lerna": "^3.0.6"
   }
