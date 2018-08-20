@@ -1,5 +1,5 @@
 import { OAuthTokenResponse, OAuthExchangeResponse } from '../response';
-import { mapOAuthTokenResponseToAccessToken, mapOAuthExchangeResponseToExchangeCode, mapOAuthTokenResponseToAuthData } from './oauth';
+import { mapLauncherTokenToAccessToken, mapExchangeTokenToExchangeCode, mapFortniteTokenToAuthData, mapRefreshTokenToRefreshData } from './oauth';
 
 const OAUTH_TOKEN_RESPONSE: OAuthTokenResponse = {
   access_token: 'access-token',
@@ -25,33 +25,45 @@ const OAUTH_EXCHANGE_RESPONSE: OAuthExchangeResponse = {
 };
 
 describe('OAuth Mapper', () => {
-  describe('mapOAuthTokenResponseToAccessToken()', () => {
+  describe('mapLauncherTokenToAccessToken()', () => {
     it('should return acccess token', () => {
-      const result = mapOAuthTokenResponseToAccessToken(OAUTH_TOKEN_RESPONSE);
+      const result = mapLauncherTokenToAccessToken(OAUTH_TOKEN_RESPONSE);
 
       expect(result).toEqual(OAUTH_TOKEN_RESPONSE.access_token);
     });
   });
 
-  describe('mapOAuthExchangeResponseToExchangeCode()', () => {
+  describe('mapExchangeTokenToExchangeCode()', () => {
     it('should return exchange code', () => {
-      const result = mapOAuthExchangeResponseToExchangeCode(OAUTH_EXCHANGE_RESPONSE);
+      const result = mapExchangeTokenToExchangeCode(OAUTH_EXCHANGE_RESPONSE);
 
       expect(result).toEqual(OAUTH_EXCHANGE_RESPONSE.code);
     });
   });
 
-  describe('mapOAuthTokenResponseToAuthConstructor()', () => {
+  describe('mapFortniteTokenToAuthData()', () => {
     it('should return auth class constructor params', () => {
       const response = OAUTH_TOKEN_RESPONSE;
-      const result = mapOAuthTokenResponseToAuthData(response);
+      const result = mapFortniteTokenToAuthData(response);
 
       expect(result).toBeInstanceOf(Object);
       expect(result.accessToken).toEqual(response.access_token);
       expect(result.appId).toEqual(response.in_app_id);
       expect(result.refreshToken).toEqual(response.refresh_token);
       expect(result.accountId).toEqual(response.account_id);
-      expect(result.expiresAt).toBeInstanceOf(Date);
+      expect(result.expiresAt).toEqual(new Date(response.expires_at));
+    });
+  });
+
+  describe('mapRefreshTokenToRefreshData()', () => {
+    it('should return refresh data', () => {
+      const response = OAUTH_TOKEN_RESPONSE;
+      const result = mapRefreshTokenToRefreshData(response);
+
+      expect(result).toBeInstanceOf(Object);
+      expect(result.accessToken).toEqual(response.access_token);
+      expect(result.refreshToken).toEqual(response.refresh_token);
+      expect(result.expiresAt).toEqual(new Date(response.expires_at));
     });
   });
 });

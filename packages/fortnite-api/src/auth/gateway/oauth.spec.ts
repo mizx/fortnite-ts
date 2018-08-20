@@ -1,21 +1,21 @@
 import nock from 'nock';
-import { OAUTH_TOKEN_ENDPOINT, OAUTH_EXCHANGE_ENDPOINT, getLauncherToken, exchangeToken, getFortniteToken } from './oauth';
+import { OAUTH_TOKEN_ENDPOINT, OAUTH_EXCHANGE_ENDPOINT, fetchLauncherToken, fetchExchangeToken, fetchFortniteToken, fetchRefreshToken } from './oauth';
 
 const OAUTH_TOKEN_SUCCESS_RESPONSE = `{
-  "access_token": "access-token-hash",
+  "access_token": "access-token",
   "expires_in": 28800,
   "expires_at": "2018-08-17T14:59:39.368Z",
   "token_type": "bearer",
   "refresh_token": "refresh-token",
   "refresh_expires": 1987200,
   "refresh_expires_at": "2018-09-09T06:59:39.368Z",
-  "account_id": "account-id-hash",
-  "client_id": "client-id-hash",
+  "account_id": "account-id",
+  "client_id": "client-id",
   "internal_client": true,
   "client_service": "launcher",
   "lastPasswordValidation": "2018-08-17T06:59:39.368Z",
   "app": "launcher",
-  "in_app_id": "app-id-hash"
+  "in_app_id": "app-id"
 }`;
 const OAUTH_TOKEN_FAILURE_RESPONSE = `{
   "errorCode": "errors.com.epicgames.account.invalid_account_credentials",
@@ -47,7 +47,7 @@ describe('OAuth Gateway', () => {
     nock.cleanAll();
   });
 
-  describe('getLauncherToken()', () => {
+  describe('fetchLauncherToken()', () => {
     const username = 'username';
     const password = 'password';
 
@@ -59,7 +59,6 @@ describe('OAuth Gateway', () => {
       }
 
       nock(url.origin)
-        .persist()
         .post(url.pathname, (body: Body) => body.username === username && body.password === password)
         .reply(200, OAUTH_TOKEN_SUCCESS_RESPONSE)
         .post(url.pathname)
@@ -67,19 +66,19 @@ describe('OAuth Gateway', () => {
     });
 
     it('should match snapshot with correct username/password', async () => {
-      const response = await getLauncherToken(username, password);
+      const response = await fetchLauncherToken(username, password);
 
       expect(response).toMatchSnapshot();
     });
 
     it ('should fail with invalid username/password', () => {
-      expect(getLauncherToken(username, 'invalid-password'))
+      expect(fetchLauncherToken(username, 'invalid-password'))
         .rejects
         .toThrow();
     });
   });
 
-  describe('exchangeToken()', () => {
+  describe('fetchExchangeToken()', () => {
     const accessToken = 'access-token';
 
     beforeEach(() => {
@@ -94,19 +93,19 @@ describe('OAuth Gateway', () => {
     });
 
     it('should match snapshot with valid access token', async () => {
-      const response = await exchangeToken(accessToken);
+      const response = await fetchExchangeToken(accessToken);
 
       expect(response).toMatchSnapshot();
     });
 
     it('should fail with invalid authorization header', () => {
-      expect(exchangeToken('invalid-access-token'))
+      expect(fetchExchangeToken('invalid-access-token'))
         .rejects
         .toThrow();
     });
   });
 
-  describe('getFortniteToken()', () => {
+  describe('fetchFortniteToken()', () => {
     const exchangeCode = 'exchange-code';
 
     beforeEach(() => {
@@ -116,7 +115,6 @@ describe('OAuth Gateway', () => {
       }
 
       nock(url.origin)
-        .persist()
         .post(url.pathname, (body: Body) => body.exchange_code === exchangeCode)
         .reply(200, OAUTH_TOKEN_SUCCESS_RESPONSE)
         .post(url.pathname)
@@ -124,13 +122,42 @@ describe('OAuth Gateway', () => {
     });
 
     it('should match snapshot with correct exchange code', async () => {
-      const response = await getFortniteToken(exchangeCode);
+      const response = await fetchFortniteToken(exchangeCode);
 
       expect(response).toMatchSnapshot();
     });
 
     it('should fail with invalid exchange code', () => {
-      expect(getFortniteToken('invalid-exchange-code'))
+      expect(fetchFortniteToken('invalid-exchange-code'))
+        .rejects
+        .toThrow();
+    });
+  });
+
+  describe('fetchRefreshToken()', () => {
+    const refreshToken = 'refresh-token';
+
+    beforeEach(() => {
+      const url = OAUTH_TOKEN_ENDPOINT;
+      interface Body {
+        refresh_token: string;
+      }
+
+      nock(url.origin)
+        .post(url.pathname, (body: Body) => body.refresh_token === refreshToken)
+        .reply(200, OAUTH_TOKEN_SUCCESS_RESPONSE)
+        .post(url.pathname)
+        .reply(400, OAUTH_TOKEN_FAILURE_RESPONSE);
+    });
+
+    it('should match snapshot with correct refresh token', async () => {
+      const response = await fetchRefreshToken(refreshToken);
+
+      expect(response).toMatchSnapshot();
+    });
+
+    it('should fail with invalid refresh token', () => {
+      expect(fetchRefreshToken('invalid-refresh-token'))
         .rejects
         .toThrow();
     });

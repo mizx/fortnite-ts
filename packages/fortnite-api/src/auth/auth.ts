@@ -1,17 +1,17 @@
-import { getLauncherToken, exchangeToken, getFortniteToken } from './gateway';
-import { mapOAuthTokenResponseToAccessToken, mapOAuthExchangeResponseToExchangeCode, mapOAuthTokenResponseToAuthData } from './map';
+import { fetchLauncherToken, fetchExchangeToken, fetchFortniteToken, fetchRefreshToken } from './gateway';
+import { mapLauncherTokenToAccessToken, mapExchangeTokenToExchangeCode, mapFortniteTokenToAuthData, mapRefreshTokenToRefreshData } from './map';
 
 export class Auth {
 
   public static async login(username: string, password: string) {
-    const launcherTokenResponse = await getLauncherToken(username, password);
-    const accessToken = mapOAuthTokenResponseToAccessToken(launcherTokenResponse);
+    const launcherTokenResponse = await fetchLauncherToken(username, password);
+    const accessToken = mapLauncherTokenToAccessToken(launcherTokenResponse);
 
-    const exchangeResponse = await exchangeToken(accessToken);
-    const exchangeCode = mapOAuthExchangeResponseToExchangeCode(exchangeResponse);
+    const exchangeResponse = await fetchExchangeToken(accessToken);
+    const exchangeCode = mapExchangeTokenToExchangeCode(exchangeResponse);
 
-    const forniteTokenResponse = await getFortniteToken(exchangeCode);
-    const data = mapOAuthTokenResponseToAuthData(forniteTokenResponse);
+    const forniteTokenResponse = await fetchFortniteToken(exchangeCode);
+    const data = mapFortniteTokenToAuthData(forniteTokenResponse);
 
     return new Auth(data.accessToken, data.appId, data.refreshToken, data.accountId, data.expiresAt);
   }
@@ -28,5 +28,14 @@ export class Auth {
     this.refreshToken = refreshToken;
     this.accountId = accountId;
     this.expiresAt = expiresAt;
+  }
+
+  private async refresh() {
+    const refreshResponse = await fetchRefreshToken(this.refreshToken);
+    const data = mapRefreshTokenToRefreshData(refreshResponse);
+
+    this.accessToken = data.accessToken;
+    this.refreshToken = data.refreshToken;
+    this.expiresAt = data.expiresAt;
   }
 }
