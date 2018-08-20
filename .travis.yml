@@ -7,4 +7,5 @@ node_js:
 env:
   matrix:
     - PACKAGE=fortnite-api-ts
+    - PACKAGE=fortnite-ui
 script: lerna run test --scope $PACKAGE
