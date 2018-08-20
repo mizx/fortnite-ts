@@ -1,6 +1,9 @@
 {
   "name": "@mizx/fortnite-root",
   "private": true,
+  "scripts": {
+    "postinstall": "lerna bootstrap"
+  },
   "devDependencies": {
     "lerna": "^3.0.6"
   }
