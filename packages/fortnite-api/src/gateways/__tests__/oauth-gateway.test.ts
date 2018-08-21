@@ -1,5 +1,5 @@
 import nock from 'nock';
-import { OAUTH_TOKEN_ENDPOINT, OAUTH_EXCHANGE_ENDPOINT, fetchLauncherToken, fetchExchangeToken, fetchFortniteToken, fetchRefreshToken } from '../oauth-gateway';
+import * as oauthGateway from '../oauth-gateway';
 
 const OAUTH_TOKEN_SUCCESS_RESPONSE = `{
   "access_token": "access-token",
@@ -52,7 +52,7 @@ describe('OAuth Gateway', () => {
     const password = 'password';
 
     beforeEach(() => {
-      const url = OAUTH_TOKEN_ENDPOINT;
+      const url = oauthGateway.OAUTH_TOKEN_ENDPOINT;
       interface Body {
         username: string;
         password: string;
@@ -66,13 +66,13 @@ describe('OAuth Gateway', () => {
     });
 
     it('should match snapshot with correct username/password', async () => {
-      const response = await fetchLauncherToken(username, password);
+      const response = await oauthGateway.fetchLauncherToken(username, password);
 
       expect(response).toMatchSnapshot();
     });
 
     it ('should fail with invalid username/password', () => {
-      expect(fetchLauncherToken(username, 'invalid-password'))
+      expect(oauthGateway.fetchLauncherToken(username, 'invalid-password'))
         .rejects
         .toThrow();
     });
@@ -82,7 +82,7 @@ describe('OAuth Gateway', () => {
     const accessToken = 'access-token';
 
     beforeEach(() => {
-      const url = OAUTH_EXCHANGE_ENDPOINT;
+      const url = oauthGateway.OAUTH_EXCHANGE_ENDPOINT;
 
       nock(url.origin)
         .matchHeader('authorization', `bearer ${accessToken}`)
@@ -93,13 +93,13 @@ describe('OAuth Gateway', () => {
     });
 
     it('should match snapshot with valid access token', async () => {
-      const response = await fetchExchangeToken(accessToken);
+      const response = await oauthGateway.fetchExchangeToken(accessToken);
 
       expect(response).toMatchSnapshot();
     });
 
     it('should fail with invalid authorization header', () => {
-      expect(fetchExchangeToken('invalid-access-token'))
+      expect(oauthGateway.fetchExchangeToken('invalid-access-token'))
         .rejects
         .toThrow();
     });
@@ -109,7 +109,7 @@ describe('OAuth Gateway', () => {
     const exchangeCode = 'exchange-code';
 
     beforeEach(() => {
-      const url = OAUTH_TOKEN_ENDPOINT;
+      const url = oauthGateway.OAUTH_TOKEN_ENDPOINT;
       interface Body {
         exchange_code: string;
       }
@@ -122,13 +122,13 @@ describe('OAuth Gateway', () => {
     });
 
     it('should match snapshot with correct exchange code', async () => {
-      const response = await fetchFortniteToken(exchangeCode);
+      const response = await oauthGateway.fetchFortniteToken(exchangeCode);
 
       expect(response).toMatchSnapshot();
     });
 
     it('should fail with invalid exchange code', () => {
-      expect(fetchFortniteToken('invalid-exchange-code'))
+      expect(oauthGateway.fetchFortniteToken('invalid-exchange-code'))
         .rejects
         .toThrow();
     });
@@ -138,7 +138,7 @@ describe('OAuth Gateway', () => {
     const refreshToken = 'refresh-token';
 
     beforeEach(() => {
-      const url = OAUTH_TOKEN_ENDPOINT;
+      const url = oauthGateway.OAUTH_TOKEN_ENDPOINT;
       interface Body {
         refresh_token: string;
       }
@@ -151,13 +151,13 @@ describe('OAuth Gateway', () => {
     });
 
     it('should match snapshot with correct refresh token', async () => {
-      const response = await fetchRefreshToken(refreshToken);
+      const response = await oauthGateway.fetchRefreshToken(refreshToken);
 
       expect(response).toMatchSnapshot();
     });
 
     it('should fail with invalid refresh token', () => {
-      expect(fetchRefreshToken('invalid-refresh-token'))
+      expect(oauthGateway.fetchRefreshToken('invalid-refresh-token'))
         .rejects
         .toThrow();
     });
