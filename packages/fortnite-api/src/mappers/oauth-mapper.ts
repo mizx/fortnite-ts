@@ -1,15 +1,15 @@
 import { OAuthTokenResponse, OAuthExchangeResponse } from '../auth/responses';
 import { AuthData, AuthRefreshData } from '../auth/interfaces';
 
-export function mapLauncherTokenToAccessToken(response: OAuthTokenResponse): string {
+export const mapLauncherTokenToAccessToken = (response: OAuthTokenResponse): string => {
   return response.access_token;
-}
+};
 
-export function mapExchangeTokenToExchangeCode(response: OAuthExchangeResponse): string {
+export const mapExchangeTokenToExchangeCode = (response: OAuthExchangeResponse): string => {
   return response.code;
-}
+};
 
-export function mapFortniteTokenToAuthData(response: OAuthTokenResponse): AuthData {
+export const mapFortniteTokenToAuthData = (response: OAuthTokenResponse): AuthData => {
   return {
     accessToken: response.access_token,
     appId: response.in_app_id,
@@ -17,12 +17,12 @@ export function mapFortniteTokenToAuthData(response: OAuthTokenResponse): AuthDa
     accountId: response.account_id,
     expiresAt: new Date(response.expires_at)
   };
-}
+};
 
-export function mapRefreshTokenToRefreshData(response: OAuthTokenResponse): AuthRefreshData {
+export const mapRefreshTokenToRefreshData = (response: OAuthTokenResponse): AuthRefreshData => {
   return {
     accessToken: response.access_token,
     refreshToken: response.refresh_token,
     expiresAt: new Date(response.expires_at)
   };
-}
+};

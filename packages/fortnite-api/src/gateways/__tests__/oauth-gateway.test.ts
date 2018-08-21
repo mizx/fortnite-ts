@@ -1,5 +1,5 @@
 import nock from 'nock';
-import { OAUTH_TOKEN_ENDPOINT, OAUTH_EXCHANGE_ENDPOINT, fetchLauncherToken, fetchExchangeToken, fetchFortniteToken, fetchRefreshToken } from './oauth';
+import { OAUTH_TOKEN_ENDPOINT, OAUTH_EXCHANGE_ENDPOINT, fetchLauncherToken, fetchExchangeToken, fetchFortniteToken, fetchRefreshToken } from '../oauth-gateway';
 
 const OAUTH_TOKEN_SUCCESS_RESPONSE = `{
   "access_token": "access-token",
