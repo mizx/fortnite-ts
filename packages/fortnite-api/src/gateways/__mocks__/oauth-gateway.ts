@@ -23,7 +23,7 @@ const OAUTH_EXCHANGE_RESPONSE: OAuthExchangeResponse = {
   creatingClientId: 'client-id'
 };
 
-export const fetchLauncherToken = async (username: string, password: string) => OAUTH_TOKEN_RESPONSE;
-export const fetchExchangeToken = async (accessToken: string) => OAUTH_EXCHANGE_RESPONSE;
-export const fetchFortniteToken = async (exchangeCode: string) => OAUTH_TOKEN_RESPONSE;
-export const fetchRefreshToken = async (refreshToken: string) => OAUTH_TOKEN_RESPONSE;
+export const fetchLauncherToken = async () => OAUTH_TOKEN_RESPONSE;
+export const fetchExchangeToken = async () => OAUTH_EXCHANGE_RESPONSE;
+export const fetchFortniteToken = async () => OAUTH_TOKEN_RESPONSE;
+export const fetchRefreshToken = async () => OAUTH_TOKEN_RESPONSE;

@@ -1,4 +1,3 @@
-import { OAuthTokenResponse, OAuthExchangeResponse } from '../../auth/responses';
 import { AuthData, AuthRefreshData } from '../../auth/interfaces';
 
 const accessToken = 'access-token';
@@ -16,7 +15,7 @@ const authRefreshData: AuthRefreshData = {
   expiresAt: new Date(2019)
 };
 
-export const mapLauncherTokenToAccessToken = (response: OAuthTokenResponse): string => accessToken;
-export const mapExchangeTokenToExchangeCode = (response: OAuthExchangeResponse): string => exchangeCode;
-export const mapFortniteTokenToAuthData = (response: OAuthTokenResponse): AuthData => authData;
-export const mapRefreshTokenToRefreshData = (response: OAuthTokenResponse): AuthRefreshData => authRefreshData;
+export const mapLauncherTokenToAccessToken = (): string => accessToken;
+export const mapExchangeTokenToExchangeCode = (): string => exchangeCode;
+export const mapFortniteTokenToAuthData = (): AuthData => authData;
+export const mapRefreshTokenToRefreshData = (): AuthRefreshData => authRefreshData;
