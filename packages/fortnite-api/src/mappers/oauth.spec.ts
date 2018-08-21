@@ -1,4 +1,4 @@
-import { OAuthTokenResponse, OAuthExchangeResponse } from '../response';
+import { OAuthTokenResponse, OAuthExchangeResponse } from '../auth/responses';
 import { mapLauncherTokenToAccessToken, mapExchangeTokenToExchangeCode, mapFortniteTokenToAuthData, mapRefreshTokenToRefreshData } from './oauth';
 
 const OAUTH_TOKEN_RESPONSE: OAuthTokenResponse = {

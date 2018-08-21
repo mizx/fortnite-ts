@@ -1,6 +1,6 @@
 import { get, post } from 'request-promise-native';
 import { URL } from 'url';
-import { OAuthTokenResponse, OAuthExchangeResponse } from '../response';
+import { OAuthTokenResponse, OAuthExchangeResponse } from '../auth/responses';
 
 export const OAUTH_TOKEN_ENDPOINT = new URL('https://account-public-service-prod03.ol.epicgames.com/account/api/oauth/token');
 export const OAUTH_EXCHANGE_ENDPOINT = new URL('https://account-public-service-prod03.ol.epicgames.com/account/api/oauth/exchange');
