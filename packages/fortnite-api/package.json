@@ -6,8 +6,8 @@
   "author": "Cody Mathisen",
   "license": "MIT",
   "scripts": {
-    "test": "jest",
-    "test:watch": "jest --watch"
+    "test": "jest --config jest.json",
+    "test:watch": "jest --config jest.json --watch"
   },
   "devDependencies": {
     "@types/jest": "^23.3.1",
@@ -22,19 +22,5 @@
   "dependencies": {
     "request": "^2.88.0",
     "request-promise-native": "^1.0.5"
-  },
-  "jest": {
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ]
   }
 }
