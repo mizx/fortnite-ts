@@ -23,7 +23,7 @@ const OAUTH_EXCHANGE_RESPONSE: OAuthExchangeResponse = {
   creatingClientId: 'client-id'
 };
 
-export const fetchLauncherToken = async () => OAUTH_TOKEN_RESPONSE;
-export const fetchExchangeToken = async () => OAUTH_EXCHANGE_RESPONSE;
-export const fetchFortniteToken = async () => OAUTH_TOKEN_RESPONSE;
-export const fetchRefreshToken = async () => OAUTH_TOKEN_RESPONSE;
+export const fetchLauncherToken = jest.fn(async () => OAUTH_TOKEN_RESPONSE);
+export const fetchExchangeToken = jest.fn(async () => OAUTH_EXCHANGE_RESPONSE);
+export const fetchFortniteToken = jest.fn(async () => OAUTH_TOKEN_RESPONSE);
+export const fetchRefreshToken = jest.fn(async () => OAUTH_TOKEN_RESPONSE);

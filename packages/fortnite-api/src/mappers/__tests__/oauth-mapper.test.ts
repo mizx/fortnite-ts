@@ -1,13 +1,13 @@
-import * as oauthGateway from '../../gateways';
-import * as oauthMapper from '../oauth-mapper';
+import { fetchLauncherToken, fetchExchangeToken, fetchFortniteToken, fetchRefreshToken } from '../../gateways';
+import { mapLauncherTokenToAccessToken, mapExchangeTokenToExchangeCode, mapFortniteTokenToAuthData, mapRefreshTokenToRefreshData } from '../oauth-mapper';
 
 jest.mock('../../gateways');
 
 describe('OAuth Mapper', () => {
   describe('mapLauncherTokenToAccessToken()', () => {
     it('should return access token', async () => {
-      const response = await oauthGateway.fetchLauncherToken('', '');
-      const result = oauthMapper.mapLauncherTokenToAccessToken(response);
+      const response = await fetchLauncherToken('', '');
+      const result = mapLauncherTokenToAccessToken(response);
 
       expect(result).toBe(response.access_token);
     });
@@ -15,8 +15,8 @@ describe('OAuth Mapper', () => {
 
   describe('mapExchangeTokenToExchangeCode()', () => {
     it('should return exchange code', async () => {
-      const response = await oauthGateway.fetchExchangeToken('');
-      const result = oauthMapper.mapExchangeTokenToExchangeCode(response);
+      const response = await fetchExchangeToken('');
+      const result = mapExchangeTokenToExchangeCode(response);
 
       expect(result).toBe(response.code);
     });
@@ -24,8 +24,8 @@ describe('OAuth Mapper', () => {
 
   describe('mapFortniteTokenToAuthData()', () => {
     it('should return auth class constructor params', async () => {
-      const response = await oauthGateway.fetchFortniteToken('');
-      const result = oauthMapper.mapFortniteTokenToAuthData(response);
+      const response = await fetchFortniteToken('');
+      const result = mapFortniteTokenToAuthData(response);
 
       expect(result).toBeInstanceOf(Object);
       expect(result.accessToken).toBe(response.access_token);
@@ -39,8 +39,8 @@ describe('OAuth Mapper', () => {
 
   describe('mapRefreshTokenToRefreshData()', () => {
     it('should return refresh data', async () => {
-      const response = await oauthGateway.fetchRefreshToken('');
-      const result = oauthMapper.mapRefreshTokenToRefreshData(response);
+      const response = await fetchRefreshToken('');
+      const result = mapRefreshTokenToRefreshData(response);
 
       expect(result).toBeInstanceOf(Object);
       expect(result.accessToken).toBe(response.access_token);

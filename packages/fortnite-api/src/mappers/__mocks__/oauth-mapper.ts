@@ -15,7 +15,7 @@ const authRefreshData: AuthRefreshData = {
   expiresAt: new Date(2019)
 };
 
-export const mapLauncherTokenToAccessToken = (): string => accessToken;
-export const mapExchangeTokenToExchangeCode = (): string => exchangeCode;
-export const mapFortniteTokenToAuthData = (): AuthData => authData;
-export const mapRefreshTokenToRefreshData = (): AuthRefreshData => authRefreshData;
+export const mapLauncherTokenToAccessToken = jest.fn(() => accessToken);
+export const mapExchangeTokenToExchangeCode = jest.fn(() => exchangeCode);
+export const mapFortniteTokenToAuthData = jest.fn(() => authData);
+export const mapRefreshTokenToRefreshData = jest.fn(() => authRefreshData);
