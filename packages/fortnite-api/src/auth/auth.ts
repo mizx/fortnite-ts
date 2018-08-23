@@ -1,6 +1,11 @@
 import { fetchLauncherToken, fetchExchangeToken, fetchFortniteToken, fetchRefreshToken } from '../gateways';
 import { mapLauncherTokenToAccessToken, mapExchangeTokenToExchangeCode, mapFortniteTokenToAuthData, mapRefreshTokenToRefreshData } from '../mappers';
-import { AuthData } from './interfaces';
+import { AuthData, AuthOptions } from './interfaces';
+
+const defaultOptions: AuthOptions = {
+  tickDelay: 5 * 60 * 1000,
+  refreshGrace: 1 * 1000
+};
 
 export class Auth {
 
@@ -22,16 +27,36 @@ export class Auth {
   private refreshToken: string;
   private accountId: string;
   private expiresAt: Date;
+  private ticker: NodeJS.Timer;
+  private options: AuthOptions;
 
-  constructor(data: AuthData) {
+  constructor(data: AuthData, options: Partial<AuthOptions> = {}) {
     this.accessToken = data.accessToken;
     this.appId = data.appId;
     this.refreshToken = data.refreshToken;
     this.accountId = data.accountId;
     this.expiresAt = data.expiresAt;
+    this.options = { ...defaultOptions, ...options };
+
+    this.ticker = setInterval(() => this.checkIfTokenValid(), this.options.tickDelay);
   }
 
-  private async refresh() {
+  public close() {
+    clearInterval(this.ticker);
+  }
+
+  private checkIfTokenValid() {
+    const { refreshGrace } = this.options;
+    const now = new Date();
+    const expire = new Date(this.expiresAt.getTime() - refreshGrace);
+
+    if (expire < now) {
+      this.requestNewToken();
+    }
+  }
+
+  // TODO: potentially move to separate refresh service
+  private async requestNewToken() {
     const refreshResponse = await fetchRefreshToken(this.refreshToken);
     const data = mapRefreshTokenToRefreshData(refreshResponse);
 
