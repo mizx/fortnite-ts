@@ -1,12 +1,20 @@
 import { Auth } from './auth';
 import { EPIC_USERNAME, EPIC_PASSWORD } from './config';
 
-if (!EPIC_USERNAME) {
-  throw Error('EPIC_USERNAME environment variable is not set');
+async function run() {
+  if (!EPIC_USERNAME) {
+    throw Error('EPIC_USERNAME environment variable is not set');
+  }
+
+  if (!EPIC_PASSWORD) {
+    throw Error('EPIC_PASSWORD environment variable is not set');
+  }
+
+  const auth = await Auth.login(EPIC_USERNAME, EPIC_PASSWORD);
+
+  console.log(`access token: ${auth.getToken()}`);
+
+  auth.close();
 }
 
-if (!EPIC_PASSWORD) {
-  throw Error('EPIC_PASSWORD environment variable is not set');
-}
-
-Auth.login(EPIC_USERNAME, EPIC_PASSWORD);
+run();

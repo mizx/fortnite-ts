@@ -2,6 +2,8 @@
   "name": "@mizx/fortnite-root",
   "private": true,
   "scripts": {
+    "build": "lerna run build",
+    "clean": "lerna run clean",
     "postinstall": "lerna bootstrap",
     "test": "lerna run test"
   },

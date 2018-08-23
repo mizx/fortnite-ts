@@ -45,6 +45,10 @@ export class Auth {
     clearInterval(this.ticker);
   }
 
+  public getToken() {
+    return this.accessToken;
+  }
+
   private checkIfTokenValid() {
     const { refreshGrace } = this.options;
     const now = new Date();

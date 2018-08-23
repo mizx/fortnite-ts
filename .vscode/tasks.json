@@ -1,0 +1,17 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "clean"
+    },
+    {
+      "label": "build fortnite-api",
+      "type": "npm",
+      "script": "build",
+      "options": {
+        "cwd": "${workspaceRoot}/packages/fortnite-api"
+      }
+    }
+  ]
+}
