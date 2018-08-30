@@ -1,4 +1,4 @@
-import { StatusResponse } from '../gateways/responses';
+import { StatusResponse } from '../types/external';
 import { Status } from '../types';
 
 export const mapStatusResponseToStatus = (response: StatusResponse): Status => {

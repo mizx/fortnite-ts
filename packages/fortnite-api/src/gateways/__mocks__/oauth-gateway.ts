@@ -1,4 +1,4 @@
-import { OAuthTokenResponse, OAuthExchangeResponse } from '../../auth/responses';
+import { OAuthTokenResponse, OAuthExchangeResponse } from '../../types/external';
 
 const OAUTH_TOKEN_RESPONSE: OAuthTokenResponse = {
   access_token: 'access-token',

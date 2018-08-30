@@ -1,4 +1,4 @@
-import { StatusResponse } from '../responses';
+import { StatusResponse } from '../../types/external';
 
 const STATUS_RESPONSE_OFFLINE: StatusResponse = [
   {

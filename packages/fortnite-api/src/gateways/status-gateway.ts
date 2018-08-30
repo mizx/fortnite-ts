@@ -1,6 +1,6 @@
 import { get } from 'request-promise-native';
 import { URL } from 'url';
-import { StatusResponse } from './responses';
+import { StatusResponse } from '../types/external';
 
 export const STATUS_ENDPOINT = new URL('https://lightswitch-public-service-prod06.ol.epicgames.com/lightswitch/api/service/bulk/status?serviceId=Fortnite');
 

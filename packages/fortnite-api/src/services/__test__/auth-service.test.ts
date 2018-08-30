@@ -1,7 +1,7 @@
 import { fetchLauncherToken, fetchExchangeToken, fetchFortniteToken } from '../../gateways';
 import { mapLauncherTokenToAccessToken, mapExchangeTokenToExchangeCode, mapFortniteTokenToAuthData } from '../../mappers';
-import { Auth } from '../auth';
-import { AuthData } from '../interfaces';
+import { Auth } from '../auth-service';
+import { AuthData } from '../../types';
 
 jest.mock('../../gateways');
 jest.mock('../../mappers');
@@ -24,7 +24,6 @@ describe('Auth Service', () => {
       const instance = await Auth.login(username, password);
 
       expect(fetchLauncherToken).toBeCalledWith(username, password);
-      expect(fetchLauncherToken).toHaveBeenCalled();
       expect(mapLauncherTokenToAccessToken).toHaveBeenCalled();
       expect(fetchExchangeToken).toHaveBeenCalled();
       expect(mapExchangeTokenToExchangeCode).toHaveBeenCalled();

@@ -1,6 +1,6 @@
 import { fetchLauncherToken, fetchExchangeToken, fetchFortniteToken, fetchRefreshToken } from '../gateways';
 import { mapLauncherTokenToAccessToken, mapExchangeTokenToExchangeCode, mapFortniteTokenToAuthData, mapRefreshTokenToRefreshData } from '../mappers';
-import { AuthData, AuthOptions } from './interfaces';
+import { AuthData, AuthOptions } from '../types';
 
 const defaultOptions: AuthOptions = {
   tickDelay: 5 * 60 * 1000,

@@ -1,4 +1,4 @@
-import { AuthData, AuthRefreshData } from '../../auth/interfaces';
+import { AuthData, AuthRefreshData } from '../../types';
 
 const accessToken = 'access-token';
 const exchangeCode = 'exchange-code';

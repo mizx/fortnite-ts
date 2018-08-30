@@ -1,5 +1,5 @@
-import { OAuthTokenResponse, OAuthExchangeResponse } from '../auth/responses';
-import { AuthData, AuthRefreshData } from '../auth/interfaces';
+import { OAuthTokenResponse, OAuthExchangeResponse } from '../types/external';
+import { AuthData, AuthRefreshData } from '../types';
 
 export const mapLauncherTokenToAccessToken = (response: OAuthTokenResponse): string => {
   return response.access_token;
