@@ -1,8 +1,6 @@
 import { get } from 'request-promise-native';
-import { URL } from 'url';
 import { StatusResponse } from '../types/external';
-
-export const STATUS_ENDPOINT = new URL('https://lightswitch-public-service-prod06.ol.epicgames.com/lightswitch/api/service/bulk/status?serviceId=Fortnite');
+import { STATUS_ENDPOINT } from '../urls.json';
 
 export const fetchStatus = async (token: string): Promise<StatusResponse> => {
   const headers = { authorization: `bearer ${token}` };

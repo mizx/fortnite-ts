@@ -1,0 +1,6 @@
+{
+  "OAUTH_TOKEN_ENDPOINT": "https://account-public-service-prod03.ol.epicgames.com/account/api/oauth/token",
+  "OAUTH_EXCHANGE_ENDPOINT": "https://account-public-service-prod03.ol.epicgames.com/account/api/oauth/exchange",
+  "OAUTH_VERIFY_ENDPOINT": "https://account-public-service-prod03.ol.epicgames.com/account/api/oauth/verify",
+  "STATUS_ENDPOINT": "https://lightswitch-public-service-prod06.ol.epicgames.com/lightswitch/api/service/bulk/status?serviceId=Fortnite"
+}

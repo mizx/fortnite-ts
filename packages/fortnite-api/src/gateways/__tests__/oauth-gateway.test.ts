@@ -1,5 +1,7 @@
 import nock from 'nock';
-import { OAUTH_TOKEN_ENDPOINT, fetchLauncherToken, OAUTH_EXCHANGE_ENDPOINT, fetchExchangeToken, fetchFortniteToken, fetchRefreshToken } from '../oauth-gateway';
+import { fetchLauncherToken, fetchExchangeToken, fetchFortniteToken, fetchRefreshToken } from '../oauth-gateway';
+import { OAUTH_TOKEN_ENDPOINT, OAUTH_EXCHANGE_ENDPOINT } from '../../urls.json';
+import { URL } from 'url';
 
 const OAUTH_TOKEN_SUCCESS_RESPONSE = `{
   "access_token": "access-token",
@@ -52,7 +54,7 @@ describe('OAuth Gateway', () => {
     const password = 'password';
 
     beforeEach(() => {
-      const url = OAUTH_TOKEN_ENDPOINT;
+      const url = new URL(OAUTH_TOKEN_ENDPOINT);
       interface Body {
         username: string;
         password: string;
@@ -82,7 +84,7 @@ describe('OAuth Gateway', () => {
     const accessToken = 'access-token';
 
     beforeEach(() => {
-      const url = OAUTH_EXCHANGE_ENDPOINT;
+      const url = new URL(OAUTH_EXCHANGE_ENDPOINT);
 
       nock(url.origin)
         .matchHeader('authorization', `bearer ${accessToken}`)
@@ -109,7 +111,7 @@ describe('OAuth Gateway', () => {
     const exchangeCode = 'exchange-code';
 
     beforeEach(() => {
-      const url = OAUTH_TOKEN_ENDPOINT;
+      const url = new URL(OAUTH_TOKEN_ENDPOINT);
       interface Body {
         exchange_code: string;
       }
@@ -138,7 +140,7 @@ describe('OAuth Gateway', () => {
     const refreshToken = 'refresh-token';
 
     beforeEach(() => {
-      const url = OAUTH_TOKEN_ENDPOINT;
+      const url = new URL(OAUTH_TOKEN_ENDPOINT);
       interface Body {
         refresh_token: string;
       }
