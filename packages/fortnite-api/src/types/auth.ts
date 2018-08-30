@@ -1,12 +1,9 @@
-export interface AuthRefreshData {
+export interface AuthData {
+  appId: string;
+  accountId: string;
   accessToken: string;
   refreshToken: string;
   expiresAt: Date;
-}
-
-export interface AuthData extends AuthRefreshData {
-  appId: string;
-  accountId: string;
 }
 
 export interface AuthOptions {

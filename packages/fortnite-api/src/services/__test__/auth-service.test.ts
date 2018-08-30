@@ -1,5 +1,5 @@
 import { fetchLauncherToken, fetchExchangeToken, fetchFortniteToken } from '../../gateways';
-import { mapLauncherTokenToAccessToken, mapExchangeTokenToExchangeCode, mapFortniteTokenToAuthData } from '../../mappers';
+import { mapTokenResponseToAuthData, mapExchangeResponseToExchangeCode } from '../../mappers';
 import { Auth } from '../auth-service';
 import { AuthData } from '../../types';
 
@@ -24,11 +24,10 @@ describe('Auth Service', () => {
       const instance = await Auth.login(username, password);
 
       expect(fetchLauncherToken).toBeCalledWith(username, password);
-      expect(mapLauncherTokenToAccessToken).toHaveBeenCalled();
+      expect(mapTokenResponseToAuthData).toHaveBeenCalledTimes(2);
       expect(fetchExchangeToken).toHaveBeenCalled();
-      expect(mapExchangeTokenToExchangeCode).toHaveBeenCalled();
+      expect(mapExchangeResponseToExchangeCode).toHaveBeenCalled();
       expect(fetchFortniteToken).toHaveBeenCalled();
-      expect(mapFortniteTokenToAuthData).toHaveBeenCalled();
 
       expect(instance).toBeInstanceOf(Auth);
     });

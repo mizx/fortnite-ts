@@ -1,5 +1,5 @@
 import { fetchLauncherToken, fetchExchangeToken, fetchFortniteToken, fetchRefreshToken } from '../gateways';
-import { mapLauncherTokenToAccessToken, mapExchangeTokenToExchangeCode, mapFortniteTokenToAuthData, mapRefreshTokenToRefreshData } from '../mappers';
+import { mapTokenResponseToAuthData, mapExchangeResponseToExchangeCode } from '../mappers';
 import { AuthData, AuthOptions } from '../types';
 
 const defaultOptions: AuthOptions = {
@@ -11,13 +11,13 @@ export class Auth {
 
   public static async login(username: string, password: string) {
     const launcherTokenResponse = await fetchLauncherToken(username, password);
-    const accessToken = mapLauncherTokenToAccessToken(launcherTokenResponse);
+    const { accessToken } = mapTokenResponseToAuthData(launcherTokenResponse);
 
     const exchangeResponse = await fetchExchangeToken(accessToken);
-    const exchangeCode = mapExchangeTokenToExchangeCode(exchangeResponse);
+    const exchangeCode = mapExchangeResponseToExchangeCode(exchangeResponse);
 
     const forniteTokenResponse = await fetchFortniteToken(exchangeCode);
-    const authData = mapFortniteTokenToAuthData(forniteTokenResponse);
+    const authData = mapTokenResponseToAuthData(forniteTokenResponse);
 
     return new Auth(authData);
   }
@@ -62,7 +62,7 @@ export class Auth {
   // TODO: potentially move to separate refresh service
   private async requestNewToken() {
     const refreshResponse = await fetchRefreshToken(this.refreshToken);
-    const data = mapRefreshTokenToRefreshData(refreshResponse);
+    const data = mapTokenResponseToAuthData(refreshResponse);
 
     this.accessToken = data.accessToken;
     this.refreshToken = data.refreshToken;

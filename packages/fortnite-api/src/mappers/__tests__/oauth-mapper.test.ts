@@ -1,52 +1,27 @@
-import { fetchLauncherToken, fetchExchangeToken, fetchFortniteToken, fetchRefreshToken } from '../../gateways';
-import { mapLauncherTokenToAccessToken, mapExchangeTokenToExchangeCode, mapFortniteTokenToAuthData, mapRefreshTokenToRefreshData } from '../oauth-mapper';
-
-jest.mock('../../gateways');
+import { OAUTH_TOKEN_RESPONSE, OAUTH_EXCHANGE_RESPONSE } from '../../gateways/__mocks__/oauth-gateway';
+import { mapTokenResponseToAuthData, mapExchangeResponseToExchangeCode } from '../oauth-mapper';
 
 describe('OAuth Mapper', () => {
-  describe('mapLauncherTokenToAccessToken()', () => {
-    it('should return access token', async () => {
-      const response = await fetchLauncherToken('', '');
-      const result = mapLauncherTokenToAccessToken(response);
+  describe('mapTokenResponseToAuthData()', () => {
+    it('should return access token', () => {
+      const response = OAUTH_TOKEN_RESPONSE;
+      const result = mapTokenResponseToAuthData(response);
 
-      expect(result).toBe(response.access_token);
+      expect(result.accessToken).toBe(response.access_token);
+      expect(result.accountId).toBe(response.account_id);
+      expect(result.appId).toBe(response.in_app_id);
+      expect(result.expiresAt).toBeInstanceOf(Date);
+      expect(result.expiresAt.toISOString()).toBe(response.expires_at);
+      expect(result.refreshToken).toBe(response.refresh_token);
     });
   });
 
-  describe('mapExchangeTokenToExchangeCode()', () => {
-    it('should return exchange code', async () => {
-      const response = await fetchExchangeToken('');
-      const result = mapExchangeTokenToExchangeCode(response);
+  describe('mapExchangeResponseToExchangeCode()', () => {
+    it('should return exchange code', () => {
+      const response = OAUTH_EXCHANGE_RESPONSE;
+      const result = mapExchangeResponseToExchangeCode(response);
 
       expect(result).toBe(response.code);
-    });
-  });
-
-  describe('mapFortniteTokenToAuthData()', () => {
-    it('should return auth class constructor params', async () => {
-      const response = await fetchFortniteToken('');
-      const result = mapFortniteTokenToAuthData(response);
-
-      expect(result).toBeInstanceOf(Object);
-      expect(result.accessToken).toBe(response.access_token);
-      expect(result.appId).toBe(response.in_app_id);
-      expect(result.refreshToken).toBe(response.refresh_token);
-      expect(result.accountId).toBe(response.account_id);
-      expect(result.expiresAt).toBeInstanceOf(Date);
-      expect(result.expiresAt.getTime()).toBe(new Date(response.expires_at).getTime());
-    });
-  });
-
-  describe('mapRefreshTokenToRefreshData()', () => {
-    it('should return refresh data', async () => {
-      const response = await fetchRefreshToken('');
-      const result = mapRefreshTokenToRefreshData(response);
-
-      expect(result).toBeInstanceOf(Object);
-      expect(result.accessToken).toBe(response.access_token);
-      expect(result.refreshToken).toBe(response.refresh_token);
-      expect(result.expiresAt).toBeInstanceOf(Date);
-      expect(result.expiresAt.getTime()).toBe(new Date(response.expires_at).getTime());
     });
   });
 });

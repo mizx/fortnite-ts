@@ -1,6 +1,6 @@
 import { OAuthTokenResponse, OAuthExchangeResponse } from '../../types/external';
 
-const OAUTH_TOKEN_RESPONSE: OAuthTokenResponse = {
+export const OAUTH_TOKEN_RESPONSE: OAuthTokenResponse = {
   access_token: 'access-token',
   expires_in: 28800,
   expires_at: '2018-08-20T09:32:40.175Z',
@@ -17,7 +17,7 @@ const OAUTH_TOKEN_RESPONSE: OAuthTokenResponse = {
   in_app_id: 'in-app-id'
 };
 
-const OAUTH_EXCHANGE_RESPONSE: OAuthExchangeResponse = {
+export const OAUTH_EXCHANGE_RESPONSE: OAuthExchangeResponse = {
   expiresInSeconds: 299,
   code: 'code',
   creatingClientId: 'client-id'

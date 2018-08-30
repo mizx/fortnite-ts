@@ -1,15 +1,7 @@
 import { OAuthTokenResponse, OAuthExchangeResponse } from '../types/external';
-import { AuthData, AuthRefreshData } from '../types';
+import { AuthData } from '../types';
 
-export const mapLauncherTokenToAccessToken = (response: OAuthTokenResponse): string => {
-  return response.access_token;
-};
-
-export const mapExchangeTokenToExchangeCode = (response: OAuthExchangeResponse): string => {
-  return response.code;
-};
-
-export const mapFortniteTokenToAuthData = (response: OAuthTokenResponse): AuthData => {
+export const mapTokenResponseToAuthData = (response: OAuthTokenResponse): AuthData => {
   return {
     accessToken: response.access_token,
     appId: response.in_app_id,
@@ -19,10 +11,6 @@ export const mapFortniteTokenToAuthData = (response: OAuthTokenResponse): AuthDa
   };
 };
 
-export const mapRefreshTokenToRefreshData = (response: OAuthTokenResponse): AuthRefreshData => {
-  return {
-    accessToken: response.access_token,
-    refreshToken: response.refresh_token,
-    expiresAt: new Date(response.expires_at)
-  };
+export const mapExchangeResponseToExchangeCode = (response: OAuthExchangeResponse): string => {
+  return response.code;
 };
