@@ -3,8 +3,7 @@ import { mapTokenResponseToAuthData, mapExchangeResponseToExchangeCode } from '.
 import { AuthData, AuthOptions } from '../types';
 
 const defaultOptions: AuthOptions = {
-  tickDelay: 5 * 60 * 1000,
-  refreshGrace: 1 * 1000
+  refreshGrace: 5 * 60 * 1000
 };
 
 export class Auth {
@@ -22,50 +21,47 @@ export class Auth {
     return new Auth(authData);
   }
 
-  private accessToken: string;
-  private appId: string;
-  private refreshToken: string;
-  private accountId: string;
-  private expiresAt: Date;
-  private ticker: NodeJS.Timer;
+  private auth: AuthData;
+  private refresher?: NodeJS.Timer;
   private options: AuthOptions;
 
-  constructor(data: AuthData, options: Partial<AuthOptions> = {}) {
-    this.accessToken = data.accessToken;
-    this.appId = data.appId;
-    this.refreshToken = data.refreshToken;
-    this.accountId = data.accountId;
-    this.expiresAt = data.expiresAt;
+  constructor(authData: AuthData, options: Partial<AuthOptions> = {}) {
+    this.auth = authData;
     this.options = { ...defaultOptions, ...options };
 
-    this.ticker = setInterval(() => this.checkIfTokenValid(), this.options.tickDelay);
+    this.scheduleRefresh();
   }
 
   public close() {
-    clearInterval(this.ticker);
+    if (this.refresher) {
+      clearTimeout(this.refresher);
+    }
   }
 
   public getToken() {
-    return this.accessToken;
+    return this.auth.accessToken;
   }
 
-  private checkIfTokenValid() {
-    const { refreshGrace } = this.options;
+  private getRefreshTimeoutDuration() {
     const now = new Date();
-    const expire = new Date(this.expiresAt.getTime() - refreshGrace);
+    const expires = this.auth.expiresAt;
+    const diff = now.getTime() - expires.getTime();
 
-    if (expire < now) {
-      this.requestNewToken();
-    }
+    return diff - this.options.refreshGrace;
+  }
+
+  private scheduleRefresh() {
+    const ms = this.getRefreshTimeoutDuration();
+    this.refresher = setTimeout(() => this.requestNewToken(), ms);
   }
 
   // TODO: potentially move to separate refresh service
   private async requestNewToken() {
-    const refreshResponse = await fetchRefreshToken(this.refreshToken);
-    const data = mapTokenResponseToAuthData(refreshResponse);
+    const refreshResponse = await fetchRefreshToken(this.auth.refreshToken);
+    const refreshAuthData = mapTokenResponseToAuthData(refreshResponse);
 
-    this.accessToken = data.accessToken;
-    this.refreshToken = data.refreshToken;
-    this.expiresAt = data.expiresAt;
+    this.auth = { ...this.auth, ...refreshAuthData };
+
+    this.scheduleRefresh();
   }
 }

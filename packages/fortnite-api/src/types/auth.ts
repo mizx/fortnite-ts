@@ -7,6 +7,5 @@ export interface AuthData {
 }
 
 export interface AuthOptions {
-  tickDelay: number;
   refreshGrace: number;
 }
